@@ -7,11 +7,30 @@ Author: Andrew Reusche
 #### Business and Data Understanding
 My project aims to automate license plate detection as the first step in a computer vision based toll collection system. Currently license plates must be manually identified and cropped before being passed to OCR. My goal is to replace this manual step with a supervised learning model that can localize license plates accurately and consistently. I used the License Plate Detection dataset from Kaggle, which contains ~1,800 plate labeled vehicle images (mostly cars and vans with non-U.S. plates). These images vary in angle and distance making them well suited for training a bounding box regression model.
 
+Data Source: "License Plate Dataset" by Ronak Gohil, Kaggle, https://www.kaggle.com/datasets/ronakgohil/license-plate-dataset
+
 #### Data Preparation
 Using PyTorch I created a custom dataset class to load YOLO formateed bounding boxes and apply image transformations. The dataset was split into training, validation, and a 10% holdout test set. I applied data augmentation (color jitter, random flipping, rotation) on the training set using torchvision.transforms, and normalized all images using ImageNet mean/std values to match ResNet expectations. My validation and test sets were only normalized to simulate real deployment conditions.
 
 #### Modeling
-I used PyTorch for modeling, testing several CNNs before moving on to a pretrained ResNet18 backbone. I explored multiple loss functions (nn.MSE, GIoU, DIoU) and ran a grid search to tune learning rate, weight decay, and dropout. My best performing model uses DIoU loss, ReNet18, and tuned hyperparameters. 
+I used PyTorch for modeling, testing several CNNs before moving on to a pretrained ResNet18 backbone. I explored multiple loss functions (nn.MSE, GIoU, DIoU) and ran a grid search to tune learning rate, weight decay, and dropout. My best performing model uses DIoU loss, ResNet18, and tuned hyperparameters. 
+
+Information on Residual Network Models (ResNet18) source:
+K. He, X. Zhang, S. Ren and J. Sun, "Deep Residual Learning for Image Recognition," 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Las Vegas, NV, USA, 2016, pp. 770-778, doi: 10.1109/CVPR.2016.90. keywords: {Training;Degradation;Complexity theory;Image recognition;Neural networks;Visualization;Image segmentation},
+
+PDF link: https://arxiv.org/pdf/1512.03385 
+
+Information on Generalized Intersection over Union (GIoU) loss source:
+H. Rezatofighi, N. Tsoi, J. Gwak, A. Sadeghian, I. Reid and S. Savarese, "Generalized Intersection Over Union: A Metric and a Loss for Bounding Box Regression," 2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), Long Beach, CA, USA, 2019, pp. 658-666, doi: 10.1109/CVPR.2019.00075. keywords: {Recognition: Detection;Categorization;Retrieval;Deep Learning},
+
+PDF Link: https://giou.stanford.edu/GIoU.pdf
+
+Information on Distance Intersection over Union (DIoU) loss source:
+Zheng, Z., Wang, P., Liu, W., Li, J., Ye, R., & Ren, D. (2020). Distance-IoU Loss: Faster and Better Learning for Bounding Box Regression. Proceedings of the AAAI Conference on Artificial Intelligence, 34(07), 12993-13000. https://doi.org/10.1609/aaai.v34i07.6999
+
+PDF link: https://arxiv.org/pdf/1911.08287
+
+
 
 #### Evaluation
 I ran my best model on the testing holdout set to simulate the model's effectiveness on new images of vehicles that drive through the tolls and it achieved a mean IoU of 0.7475, meaning that on average, my predicted bounding boxes overlap with ~75% of the area covered by the ground truth boxes. While some imperfect predictions remain, the model should be accurate enough to replace manual plate cropping in most scenarios, greatly reducing manual effort and enabling the OCR team to operate with high confidence in the input region. 
