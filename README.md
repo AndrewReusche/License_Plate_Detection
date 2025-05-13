@@ -41,6 +41,8 @@ To train and evaluate my license plate detection model I'll be using a dataset f
 
 This dataset contains 1,695 pictures of different sized vehicles with license plates taken from different angles/distances, and each one of those pictures is paired with its own set of bounding box coordinates to show where the vehicle's license plate is located in the picture.
 
+![raw_data](pictures/raw_data.jpg)
+
 From this I will use the following file directories. "images/train" and "labels/train" which I use for model training training and an internal train-test split (1,373 image/coordinate pairs to train the model). "images/val" and "labels/val" which I use as a validation set during training (159 image/coordinate pairs). "images/test" and "labels/test" which I split off from the original training set to act as a final holdout set to evaluate my final model (153 image/coordinate pairs).
 
 Each .jpg image in the dataset comes with an associated .txt file containing one line of YOLO-style annotations detailing the ground truth license plate's object class (license_plate), and normalized bounding box values (x_center, y_center, width, height).
@@ -52,16 +54,24 @@ Once my image/label pairs were loaded using a custom PyTorch dataset class I nee
 
 To help improve my model's ability to generalize on unseen data I applied augmentation to my training set using torchvision.transforms. This included color jittering (to simulate different light conditions), random horizontal flips (to help with symmetry), and random rotations (to simulate different angles shots from the camera input). I also normalized all images using the standard ImageNet mean and standard deviation values. This was important to match the pretrained expectations the the ResNet18 backbone I ended up using in some of my models. 
 
+![preprocessed_data](pictures/preprocessed_data.jpg)
+
 My validation and test sets were not augmented, only normalized, to simulate the real world deployment conditions, where I want the model to make clean/ unbiased predictions on new vehicle images. 
 
 ## Model Building and Data Analysis
 For modeling I strarted with a few custom CNN architectures to get a feel for bounding box regression. These helped set a baseline, but my results were limited.
 
+![Baseline_prediction](pictures/Baseline_prediction.jpg)
+
 My big perfomance gains came from switching to transfer learning and using a pretrained ResNet18 model where I removed the classification and added a custom regression layer that outputs bounding box coordinates (normalized between 0 and 1 using sigmoid). 
+
+![Resnet_prediction](pictures/Resnet_prediction.jpg)
 
 I trained all my models using a custom function "train_model2()" that tracked the validation set IoU and saved the best performing weights. I tested multiple loss functions including nn.MSELoss (standard regression), GIoU (box overlap distance aware), DIoU (box overlap distance and box center distance aware). Both GIoU and DIoU loss metrics gave big bumps in performance by teaching my model to focus more on where the plates were and how well the boxes align (instead of just the raw coordinate distance of MSE).
 
 To push my model's performance even further I ran a grid search over learning rate, dropout, and weight decay to find the best training setup. My winning combination used DIoU loss, learning rate= 0.0003, no dropout/ weight decay, and 75 epochs. This final model was able to get a mean IoU of 0.6396 on my validation set, and mean IoU of 0.7475 on my validation set, meaning that when simulated with unseen data (picture of cars with license plates) my model's predicted boxes overlapped pretty closely with the actual ground truth plate locations. 
+
+![Test_prediction](pictures/Test_prediction.jpg)
 
 
 ## Conclusion
@@ -91,11 +101,11 @@ Here are three potential next steps that our company could take to further impro
 PowerPoint presentation *replace link*
 ![Powerpoint_presentation](https://github.com/AndrewReusche/NLP_Sentiment_Analysis/blob/main/NLP_powerpoint.pdf)
 
-Notebook PDF *replace link*
-![Notebook_PDF](https://github.com/AndrewReusche/NLP_Sentiment_Analysis/blob/main/NLP_Notebook_PDF.pdf)
+Notebook PDF 
+![Notebook_PDF](https://github.com/AndrewReusche/License_Plate_Detection/blob/main/Notebook_PDF.pdf)
 
-Project Notebook *replace link*
-![Project_Notebook](https://github.com/AndrewReusche/NLP_Sentiment_Analysis/blob/main/NLP_Tweet_Analysis.ipynb)
+Project Notebook
+![Project_Notebook](https://github.com/AndrewReusche/License_Plate_Detection/blob/main/License_Plate_Detection_with_CNN.ipynb)
 
 ## Repository Layout *update layout accordingly*
 1) Pictures
