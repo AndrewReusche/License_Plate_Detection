@@ -118,8 +118,8 @@ Here are three potential next steps that our company could take to further impro
 
 ## Repository Links
 
-PowerPoint presentation *replace link*
-![Powerpoint_presentation](https://github.com/AndrewReusche/NLP_Sentiment_Analysis/blob/main/NLP_powerpoint.pdf)
+PowerPoint presentation 
+![Powerpoint_presentation](https://github.com/AndrewReusche/License_Plate_Detection/blob/main/Plate_presentation.pdf)
 
 Notebook PDF 
 ![Notebook_PDF](https://github.com/AndrewReusche/License_Plate_Detection/blob/main/Notebook_PDF.pdf)
@@ -127,10 +127,12 @@ Notebook PDF
 Project Notebook
 ![Project_Notebook](https://github.com/AndrewReusche/License_Plate_Detection/blob/main/License_Plate_Detection_with_CNN.ipynb)
 
-## Repository Layout *update layout accordingly*
-1) Pictures
-2) GitIgnore File
-3) Notebook PDF
+## Repository Layout
+1) The_Data: project data
+2) Pictures: some project pictures
+3) .gitignore file
 4) Project Notebook
-5) Project PowerPoint Presentation
-6) README file
+5) Project Notebook PDF
+6) Project PowerPoint Presentation
+7) Readme file
+8) README file
