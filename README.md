@@ -134,5 +134,4 @@ Project Notebook
 4) Project Notebook
 5) Project Notebook PDF
 6) Project PowerPoint Presentation
-7) Readme file
-8) README file
+7) README file
