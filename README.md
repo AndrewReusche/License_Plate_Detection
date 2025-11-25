@@ -121,9 +121,6 @@ Here are three potential next steps that our company could take to further impro
 PowerPoint presentation 
 ![Powerpoint_presentation](https://github.com/AndrewReusche/License_Plate_Detection/blob/main/Plate_presentation.pdf)
 
-Notebook PDF 
-![Notebook_PDF](https://github.com/AndrewReusche/License_Plate_Detection/blob/main/Notebook_PDF.pdf)
-
 Project Notebook
 ![Project_Notebook](https://github.com/AndrewReusche/License_Plate_Detection/blob/main/License_Plate_Detection_with_CNN.ipynb)
 
@@ -132,6 +129,5 @@ Project Notebook
 2) Pictures: some project pictures
 3) .gitignore file
 4) Project Notebook
-5) Project Notebook PDF
-6) Project PowerPoint Presentation
-7) README file
+5) Project PowerPoint Presentation
+6) README file
