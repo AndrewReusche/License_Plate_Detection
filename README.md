@@ -1,4 +1,4 @@
-# Automating License Plate Detection with Convolutional Neural Networks and Bounding Box Regression
+# Automating License Plate Capture with Convolutional Neural Networks and Bounding Box Regression
 
 Author: Andrew Reusche
 
